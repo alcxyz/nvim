@@ -17,6 +17,7 @@ return {
       'WhoIsSethDaniel/mason-tool-installer.nvim',
       { 'j-hui/fidget.nvim', opts = {} },
       'saghen/blink.cmp',
+      'b0o/schemastore.nvim',
     },
     config = function()
       vim.api.nvim_create_autocmd('LspAttach', {
@@ -110,6 +111,7 @@ return {
 
       local capabilities = require('blink.cmp').get_lsp_capabilities()
 
+      -- LSP servers managed by Mason
       local servers = {
         clangd = {},
         gopls = {},
@@ -123,6 +125,36 @@ return {
             },
           },
         },
+        yamlls = {
+          settings = {
+            yaml = {
+              schemaStore = { enable = false, url = '' },
+              schemas = require('schemastore').yaml.schemas(),
+              validate = true,
+            },
+          },
+        },
+        jsonls = {
+          settings = {
+            json = {
+              schemas = require('schemastore').json.schemas(),
+              validate = { enable = true },
+            },
+          },
+        },
+        dockerls = {},
+        docker_compose_language_service = {},
+        ansiblels = {},
+        helm_ls = {},
+        bashls = {},
+        taplo = {},
+        marksman = {},
+        rust_analyzer = {},
+        ts_ls = {},
+        html = {},
+        cssls = {},
+        emmet_ls = {},
+        terraformls = {},
       }
 
       local ensure_installed = vim.tbl_keys(servers or {})
@@ -130,6 +162,10 @@ return {
         'stylua',
         'gofumpt',
         'goimports-reviser',
+        'shellcheck',
+        'prettier',
+        'shfmt',
+        'ruff',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -144,6 +180,10 @@ return {
           end,
         },
       }
+
+      -- nixd is not in Mason's registry, installed via Nix
+      vim.lsp.config('nixd', { capabilities = capabilities })
+      vim.lsp.enable('nixd')
     end,
   },
 
@@ -177,6 +217,22 @@ return {
       formatters_by_ft = {
         lua = { 'stylua' },
         go = { 'gofumpt', 'goimports-reviser' },
+        python = { 'ruff_format', 'ruff_organize_imports' },
+        rust = { 'rustfmt' },
+        javascript = { 'prettier' },
+        typescript = { 'prettier' },
+        javascriptreact = { 'prettier' },
+        typescriptreact = { 'prettier' },
+        json = { 'prettier' },
+        markdown = { 'prettier' },
+        yaml = { 'prettier' },
+        css = { 'prettier' },
+        html = { 'prettier' },
+        sh = { 'shfmt' },
+        bash = { 'shfmt' },
+        nix = { 'nixfmt' },
+        toml = { 'taplo' },
+        terraform = { 'terraform_fmt' },
       },
     },
   },
