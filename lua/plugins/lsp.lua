@@ -166,6 +166,7 @@ return {
         'prettier',
         'shfmt',
         'ruff',
+        'tree-sitter-cli',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 

@@ -9,7 +9,7 @@ git clone git@github.com:alcxyz/kickstart.nvim.git ~/.config/nvim
 nvim
 ```
 
-Lazy.nvim bootstraps itself and installs all plugins on first launch. Mason installs LSP servers and formatters automatically.
+Lazy.nvim bootstraps itself and installs all plugins on first launch. Mason installs LSP servers, formatters, and tools (including `tree-sitter-cli`) automatically.
 
 ## Structure
 
@@ -48,15 +48,23 @@ lua/plugins/
 
 ## LSP Servers
 
-Installed via Mason: `clangd`, `gopls`, `pyright`, `lua_ls`
+Installed via Mason: `clangd`, `gopls`, `pyright`, `lua_ls`, `yamlls`, `jsonls`, `dockerls`, `docker_compose_language_service`, `ansiblels`, `helm_ls`, `bashls`, `taplo`, `marksman`, `rust_analyzer`, `ts_ls`, `html`, `cssls`, `emmet_ls`, `terraformls`
 
-## Formatters
+Installed via Nix (not Mason): `nixd`
 
-| Language | Formatter |
-|----------|-----------|
+## Formatters & Tools
+
+| Language | Tool |
+|----------|------|
 | Lua | stylua |
 | Go | gofumpt, goimports-reviser |
-| Others | LSP fallback |
+| Python | ruff |
+| Rust | rustfmt |
+| JS/TS/JSON/YAML/CSS/HTML/Markdown | prettier |
+| Shell/Bash | shfmt, shellcheck |
+| Nix | nixfmt |
+| TOML | taplo |
+| Terraform | terraform_fmt |
 
 ## Key Bindings
 
