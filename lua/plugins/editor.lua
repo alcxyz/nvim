@@ -40,14 +40,14 @@ return {
 
   {
     'MeanderingProgrammer/render-markdown.nvim',
-    dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' },
+    dependencies = { 'alcxyz/nvim-treesitter', 'nvim-tree/nvim-web-devicons' },
     ft = { 'markdown', 'norg', 'org' },
     opts = {},
   },
 
   {
-    'nvim-treesitter/nvim-treesitter',
-    branch = 'main',
+    'alcxyz/nvim-treesitter',
+    branch = 'alc/fixes',
     build = ':TSUpdate',
     opts = {
       ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' },
