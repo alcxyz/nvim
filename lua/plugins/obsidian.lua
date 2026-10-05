@@ -11,7 +11,7 @@ return {
       workspaces = {
         {
           name = 'personal',
-          path = '~/dev/git/alcxyz/obsidian-vault',
+          path = '~/src/personal/obsidian-vault',
         },
       },
     },

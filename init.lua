@@ -29,6 +29,33 @@ vim.opt.scrolloff = 10
 vim.opt.confirm = true
 
 -- [[ Keymaps ]]
+local function toggle_split_layout()
+  if vim.fn.winnr '$' < 2 then
+    vim.notify('No split layout to toggle', vim.log.levels.INFO)
+    return
+  end
+
+  local layout = vim.fn.winlayout()[1]
+  if layout == 'row' then
+    vim.cmd 'wincmd K'
+  else
+    vim.cmd 'wincmd H'
+  end
+end
+
+local function swap_with_window(direction)
+  local current = vim.fn.win_getid()
+  vim.cmd('wincmd ' .. direction)
+
+  if vim.fn.win_getid() == current then
+    return
+  end
+
+  local target = vim.fn.winnr()
+  vim.fn.win_gotoid(current)
+  vim.cmd(target .. 'wincmd x')
+end
+
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
@@ -40,6 +67,11 @@ vim.keymap.set('n', '<leader>wv', '<cmd>vsplit<CR>', { desc = '[W]indow split [V
 vim.keymap.set('n', '<leader>ws', '<cmd>split<CR>', { desc = '[W]indow split horizontal' })
 vim.keymap.set('n', '<leader>wc', '<cmd>close<CR>', { desc = '[W]indow [C]lose' })
 vim.keymap.set('n', '<leader>w=', '<C-w>=', { desc = '[W]indow equalize' })
+vim.keymap.set('n', '<leader>wt', toggle_split_layout, { desc = '[W]indow [T]oggle split layout' })
+vim.keymap.set('n', '<leader>wh', function() swap_with_window 'h' end, { desc = '[W]indow swap left' })
+vim.keymap.set('n', '<leader>wj', function() swap_with_window 'j' end, { desc = '[W]indow swap down' })
+vim.keymap.set('n', '<leader>wk', function() swap_with_window 'k' end, { desc = '[W]indow swap up' })
+vim.keymap.set('n', '<leader>wl', function() swap_with_window 'l' end, { desc = '[W]indow swap right' })
 vim.keymap.set('n', '<leader><Tab>n', '<cmd>tabnew<CR>', { desc = 'New tab' })
 vim.keymap.set('n', '<leader><Tab>c', '<cmd>tabclose<CR>', { desc = 'Close tab' })
 vim.keymap.set('n', '<leader><Tab>l', '<cmd>tabnext<CR>', { desc = 'Next tab' })
